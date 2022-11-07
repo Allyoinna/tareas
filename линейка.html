@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{overflow: hidden;}
+       
+#crossLeft{color: red;
+font-weight: bold;
+position:absolute;
+top: 0%;
+animation: node 10s linear;
+animation-fill-mode:forwards;}
+@keyframes node{
+    0%{left: 0%;}
+    100%{left: 97%;}
+    
+}
+#crossTop{color: brown;
+font-weight: bold;
+position:absolute;
+left: 0%;
+animation: node1 10s linear;
+animation-fill-mode:forwards;}
+@keyframes node1{
+    0%{top: 0%;}
+    100%{top: 95%;}
+}
+</style>
+</head>
+<body>
+    <p id = "crossLeft"></p>
+    <p id = "crossTop"></p>
+    <script>
+        let crossLeft = document.getElementById('crossLeft');
+        let crossTop = document.getElementById('crossTop');     
+     function func(){
+     let p1Left = parseInt(window.getComputedStyle(crossLeft).getPropertyValue("left"));
+     let p1Top = parseInt(window.getComputedStyle(crossTop).getPropertyValue("top"));
+     crossLeft.innerHTML = p1Left;
+     crossTop.innerHTML = p1Top;
+     
+     
+     }
+     function myTimeoutFunction()
+     {
+         func();
+         setTimeout(myTimeoutFunction, 10);
+     }
+     
+     myTimeoutFunction();
+ </script>
+</body>
+</html>
