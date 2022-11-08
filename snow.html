@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Анимация падающего снега</title>
+<style>
+  body{background-color: black;
+  overflow: hidden;
+  }
+  .snow {width: 10px;
+  height: 10px;
+  
+  background-size: 10px 10px;
+  display: inline-block;
+  margin-top: -2px;
+  position: absolute;}
+  .anime
+  {background-image: url(snow.png);
+  animation: fall1 linear infinite;}
+  .snows {width: 10px;
+  height: 10px;
+  
+  background-size: 10px 10px;
+  display: inline-block;
+  margin-top: -2px;
+  position: absolute;}
+  .anime1
+  {background-image: url(snow.png);
+  animation: fall linear infinite;}
+  @keyframes fall {
+  50%{transform: rotateY(65deg);}
+  100%{margin-top: 630px;
+  }
+  }
+  @keyframes fall1 {
+  50%{transform: rotateY(60deg);}
+  100%{margin-top: 100px;}
+  }
+  button{position: relative;
+  float: right;}
+  </style>
+  </head>
+  <body>
+  <button onclick="func()">Нажмите и пойдёт снег.</button>
+  <script>
+  
+    function random(x,y){return(x+(Math.random()*(y-x)));
+  }
+  for(var i=0; i<200; i++){
+  document.body.innerHTML+='<div class="snow" style="animation-duration:'+random(3,5)+'s; top:'+random(0,100)+'%; left:'+random(0,100)+'%;"></div>';}
+  for(var k=0; k<200; k++){
+  document.body.innerHTML+='<div class="snows" style="animation-duration:'+random(15,25)+'s; top:'+random(0,100)+'%; left:'+random(0,100)+'%;"></div>';
+  }
+  
+  var snow1 = document.body.getElementsByClassName('snow');
+  var snows1 = document.body.getElementsByClassName('snows');
+  let but = document.querySelector('button');
+  let text = ['Нажмите и пойдёт снег','Нажмите и снег идти перестанет'];
+  but.innerHTML = text[0];
+  function func(){
+  for (var i=0; i<snow1.length; i++)
+  {snow1[i].classList.toggle('anime');}
+  for (var k=0; k<snows1.length; k++)
+  {snows1[k].classList.toggle('anime1');}
+  but.innerHTML = text[1];
+  text.reverse();}
+  </script>
+  
+  </body>
+  </html>
+<body>
+  
+</body>
+</html>
