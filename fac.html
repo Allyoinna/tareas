@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Факториал</title>
+    <style>
+.contain{position: relative;
+margin: auto;}
+button{
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border-radius: 3em;
+    border: none;
+    cursor: pointer;
+}
+button:hover{background-color: brown;}
+    </style>
+</head>
+<body><div class = "contain"><h3>
+    Функция, вычисляющая все факториалы до заданного числа, включая его.
+</h1>
+    <input type = "text">
+    <button onclick="func();">Нажми</button>
+    <p></p></div>
+    <script>
+       
+        var p = document.querySelector('p');
+       
+        function fac(x){
+            if (x == 0) return;
+            if (x == 1) return x;
+            var n = x*fac(x-1);
+            p.innerHTML += n+'<br>';
+            return n;
+        }
+        function func(){ p.innerHTML = '';
+        var x = document.querySelector('input').value;
+        fac(x);
+        document.querySelector('input').value = '';}
+       
+    </script>
+</body>
+</html>
