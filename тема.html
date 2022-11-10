@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Тема</title>
+<style>
+	.text {
+		display: none;
+	}
+	.active.text {
+		display: inline-block;
+	}
+	p{
+	position: absolute;
+	left: 0%;
+	font-size: 22px;
+	font-weight: bold;
+	font-family:Verdana, Geneva, Tahoma, sans-serif;
+	animation: node 15s alternate infinite;}
+	@keyframes node{
+		100%{left: 93%;}
+	}
+	h3{text-align: center;}
+	
+	</style>
+	</head>
+	<body>
+	<select id="background">
+			<option value="color">Цвет фона</option>
+		<option value="blue">голубой</option>
+		<option value="orange">оранжевый</option>
+		<option value="red">красный</option>
+	</select>
+	
+	<select id="bl" class="text active">
+		<option>Цвет текста</option>
+		<option value="white">белый</option>
+		<option value="black">черный</option>
+		
+	</select>
+	<select id="or" class="text">
+		<option>Цвет текста</option>
+		<option value="white">белый</option>
+		<option value="black">черный</option>
+		
+	</select>
+	<select id="re" class="text">
+		<option>Цвет текста</option>
+		<option value="white">белый</option>
+		<option value="black">черный</option>
+		
+	</select>
+	<h3>Для тех, кто хочет не только светлую и тёмную темы</h3>
+	<p>Привет</p>
+	<script>
+	var backg = document.querySelector('#background');
+	
+	var blColor = document.querySelector('#bl');
+	var orColor = document.querySelector('#or');
+	var reColor = document.querySelector('#re');
+	
+	backg.addEventListener('change', function() {
+		document.querySelector('.active.text').classList.remove('active');
+			
+		if(this.value == 'blue') {
+			blColor.classList.add('active');
+	}
+		if(this.value == 'orange') {
+			orColor.classList.add('active');
+		}
+		if(this.value == 'red') {
+			reColor.classList.add('active');
+		}
+	document.body.style.backgroundColor = this.value;
+	localStorage.setItem("coloris", this.value);
+	});
+	var coloris = localStorage.getItem("coloris");
+	document.body.style.backgroundColor = coloris;
+	blColor.addEventListener('change', function(){
+	if (this.value == 'white')
+	{document.body.style.color = 'white';}
+	if (this.value == 'black') {document.body.style.color = 'black';}
+	localStorage.setItem("coloriss", this.value);});
+	orColor.addEventListener('change', function(){
+	if (this.value == 'white')
+	{document.body.style.color = 'white';}
+	if (this.value == 'black') {document.body.style.color = 'black';}
+	localStorage.setItem("coloriss", this.value);});
+	reColor.addEventListener('change', function(){
+	if (this.value == 'white')
+	{document.body.style.color = 'white';}
+	if (this.value == 'black') {document.body.style.color = 'black';}
+	localStorage.setItem("coloriss", this.value);});
+	var coloriss = localStorage.getItem("coloriss");
+	document.body.style.color = coloriss;
+	</script>
+	
+	</body>
+	</html>
+<body>
+	
+</body>
+</html>
