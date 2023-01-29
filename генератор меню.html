@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: purple;
+
+        }
+        .food{background-color: white;
+            width: max-content;
+            padding: 1%;
+            font-weight: bold;
+            color: blueviolet;
+            box-shadow: 0 0 10px 1px blueviolet;
+            border-radius: 7vh;
+        }
+        .food:hover{background-color: blueviolet;
+            box-shadow: 0 0 15px 1px blueviolet;
+            color: white;   }
+        button{width: max-content;
+            padding: 1.5%;
+            font-weight: bold;
+            color: blueviolet;
+            box-shadow: 0 0 10px 1px blueviolet;
+            border-radius: 7vh;
+            border: none;
+
+        }
+        button:hover{background-color: blueviolet;
+            box-shadow: 0 0 15px 1px blueviolet;
+            color: white;   
+        }
+        div{  box-shadow: 0 0 10px 1px blueviolet;
+            border-radius: 7vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5%;
+            width: 50%;
+        }
+     
+    </style>
+</head>
+<body><div>
+    <p class="food">Здесь появится название выбранного блюда</p>
+    <button onclick="randFood()">Нажми</button></div>
+   
+
+    <script>
+        var obj = {
+0: 'Рис с морковью и луком',
+1: 'Макароны с печенкой',
+2: 'Макароны с сосисками',
+3: 'Греча с печенкой',
+4: 'Греча с сосисками',
+5: 'Греча с молоком',
+6: 'Суп сырный',
+7: 'Суп с фрикадельками',
+8: 'Тефтели',
+9: 'Котлеты',
+10: 'Картошка жаренная с луком',
+11: 'Блинчики',
+12: 'Творожники',
+13: 'Запеканка',
+14: 'Стрипсы(отбивная грудка)',
+15: 'Нагетсы',
+16: 'Хлеб из хлебопечки',
+17: 'Горячие бутерброды с яблокоморковкой',
+18: 'Бургеры',
+19: 'Спагетти с сыром и кусочками сосисок',
+20: 'Суп гороховый',
+21: 'Солянка',
+22: 'Окрошка',
+23: 'Плов',
+24: 'Хлопья кукурузные с молоком',
+25: 'Бутерброды с сыром и медом'
+};
+function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    };
+
+function randFood(){document.querySelector('.food').innerHTML=5;
+window.timerId=window.setInterval(timer,500);}
+function stop(){
+window.clearInterval(window.timerId);
+}
+function timer(){
+var elem=document.querySelector('.food');
+elem.textContent=parseInt(elem.textContent)-1;
+if(elem.textContent==0){stop(); var n= getRandomInt(0, Object.keys(obj).length);
+    document.querySelector('.food').innerHTML=obj[n];}
+}
+console.log(Object.keys(obj).length);
+</script>
+</body>
+</html>
