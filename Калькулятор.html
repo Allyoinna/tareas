@@ -1,0 +1,134 @@
+<html>
+<head>
+<style>
+body{
+overflow: hidden;}
+.calc{background-color: black;
+width: 200px;
+padding: 4px;
+padding-bottom: 12px;
+box-shadow: 0 0 2px 2px black;
+font-size: 0;
+margin: 40px auto;
+position: relative;
+border-radius:18px;
+}
+.display{
+display: block;
+width: 185px;
+height: 30px;
+box-shadow: 0 0 2px 2px black;
+margin: 4px auto;
+margin: 4 px;
+text-align: right;
+outline: 0;
+background: white;
+padding-right: 5px;
+border-radius:9px;
+}
+.button{width: 36px;
+height: 35px;
+box-shadow: 0 0 2px 2px white;
+display: inline-block;
+margin: 6px;
+text-align: center;
+font-size: 16px;
+font-weight: bold;
+line-height: 30px;
+cursor: pointer;
+transition: background .1s, color .1s;
+border-radius:100%;
+background: #fff;}
+.button:hover, #but:hover {background: black;
+color:#fff;}
+.star {position: absolute;
+width: 1px;
+height: 1px;
+border-radius: 100%;
+background-color: white;
+box-shadow:0px 0px 2px 2px white;
+}
+#but{width: 178px;
+height: 35px;
+box-shadow: 0 0 2px 2px white;
+display: inline-block;
+margin: 6px;
+text-align: center;
+font-size: 16px;
+font-weight: bold;
+line-height: 30px;
+cursor: pointer;
+transition: background .1s, color .1s;
+border-radius:100%;
+background: #fff;}
+
+
+</style>
+</head>
+<body>
+<div class="calc">
+<input type="text" class="display" disabled value="">
+<div class="button button_C" title="Очистить" data-type="C">C</div>
+<div class="button" data-type="√">√</div>
+<div class="button" data-type="!">!</div>
+<div class="button" data-type="**">^?</div>
+<div class="button" data-type="7">7</div>
+<div class="button" data-type="8">8</div>
+<div class="button" data-type="9">9</div>
+<div class="button" data-type="/">/</div>
+<div class="button" data-type="4">4</div>
+<div class="button" data-type="5">5</div>
+<div class="button" data-type="6">6</div>
+<div class="button" data-type="*">*</div>
+<div class="button" data-type="1">1</div>
+<div class="button" data-type="2">2</div>
+<div class="button" data-type="3">3</div>
+<div class="button" data-type="-">-</div>
+<div class="button" data-type="0">0</div>
+<div class="button" data-type=".">.</div>
+<div class="button" data-type="<"><</div>
+<div class="button" data-type="+">+</div>
+<div class="button" id="but" data-type="=">=</div>
+</div>
+<script>
+var calc=document.querySelector('.calc');
+var buttons=calc.getElementsByClassName('button');
+var display=document.querySelector('.display');
+var str = '';
+function fact(x) {
+   if(x==0) {
+      return 1;
+   }
+   return x * fact(x-1);
+}
+
+for (var i=0; i<buttons.length; i++){
+addEvent(buttons[i]);}
+function addEvent(but){
+but.addEventListener('click', event);
+function event(){
+var type=but.getAttribute('data-type'); 
+if(type==='='){str = eval(str);
+   console.log(str);
+   if(str===Infinity){
+   display.value = 'На ноль делить нельзя';}
+   else{
+ display.value = str;}
+ return; }
+else if(type==='C'){
+str='';}
+else if(type==='√'){
+str=Math.sqrt(str);}
+else if(type==='!'){
+str=fact(str);}
+else if(type==='<'){str = display.value;
+   if(str === 'На ноль делить нельзя')
+   str = '';
+   else{
+str=str.substring(0, str.length-1);}}
+else{str+=type;}
+display.value=str;}
+}
+</script>
+</body>
+</html>
