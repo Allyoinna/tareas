@@ -1,0 +1,202 @@
+<html>
+<head>
+  <style>
+body{overflow: hidden;
+}
+.box::-webkit-scrollbar {
+  width: 8px;              
+}
+.box::-webkit-scrollbar-track {
+  background: teal;        
+}
+.box::-webkit-scrollbar-thumb {
+  background-color: white;  
+  border-radius: 20px;    
+  border: 2px solid teal;  
+}
+
+.box { position: absolute; width: 300px; height: 400px; padding: 10px; border: solid 1px black; display: none; z-index: 10;
+ border-radius: 7px; box-shadow: 0 0 10px 0 black; background: teal; overflow-y: scroll;
+}
+.box:hover{box-shadow: 0 0 15px 0 black;
+}
+p{margin: 0;}
+.box.active {display: block;}
+.opend{position: relative;
+float: right;}
+.color, .color1{color: red;
+background-color: white;
+margin: 2px;
+box-shadow: 0 0 5px 0 black;
+border-radius: 5px;
+padding: 2px;}
+.most{position: relative;
+float: right;
+box-shadow: 0 0 5px 0 black;
+border-radius: 5px;}
+.most:hover{background: teal;
+color: white;}
+.text, .text1{margin: 3px;
+box-shadow: 0 0 5px 0 black;
+border-radius: 5px;
+border: none;}
+h3{text-align: center;}
+.tor2{display: none;}
+</style>
+</head>
+<body>
+<button class="opend" onclick = "func()">Открыть список дел</button>
+<div id="box" class = "box"><button class="most" onclick = "closed()">╳</button>
+   <h3>Список дел</h3>
+   <p>Переместите этот блок в нужное вам место и кликните по нему мышкой, чтобы зафиксировать.</p>  
+  <input type="text" class = "text" placeholder="Заголовок"  value = "">
+  <input type="text" class = "text1" placeholder="Название" value = "">
+  <button onclick="add()">Создать</button>
+  <select onchange="sorted(this)">
+    <option disabled value=""selected >Сортировка</option>
+    <option value="title">По названию</option>
+    <option value="content">По описанию</option>
+  </select>
+  <input oninput="search(this)" placeholder="Поиск" type="text">
+  <div class = "wrap"></div>
+  <div class = "edit"></div>
+  <div class = "edit1"></div>
+
+</div>
+<script>
+var box = document.querySelector("#box");
+const currentTheme = localStorage.getItem("box");
+        if (currentTheme == "active") {
+        box.classList.add("active");
+       
+
+}
+        function func(){
+ box.classList.add("active");
+
+  let popap = "active";
+  localStorage.setItem("box", popap);
+ }
+ function closed(){
+    box.classList.remove("active");
+ 
+   let popap = "popap";
+  localStorage.setItem("box", popap);
+ }
+
+const mueve = (e) => {
+  
+  const element = e.currentTarget;
+  element.style.touchAction = "none";
+  
+  const move = (e) => {
+    element.style.left = `${element.offsetLeft + e.movementX}px`;
+    element.style.top = `${element.offsetTop + e.movementY}px`;
+  };
+  
+  const up = () => {
+    removeEventListener("pointermove", move);
+    removeEventListener("pointerup", up);
+  };
+  
+  addEventListener("pointermove", move);
+  addEventListener("pointerup", up);
+   let p1Left = parseInt(window.getComputedStyle(box).getPropertyValue("left"));
+   let p1Top = parseInt(window.getComputedStyle(box).getPropertyValue("top"));
+   localStorage.setItem("p1Left", p1Left);
+   localStorage.setItem("p1Top", p1Top);
+};
+box.addEventListener("pointerdown", mueve);
+let pLeft = localStorage.getItem("p1Left");
+let pTop =  localStorage.getItem("p1Top");
+box.style.left = pLeft;
+box.style.top = pTop;
+let div = document.querySelector('.wrap');
+let div1 = document.querySelector('.edit');
+let div2 = document.querySelector('.edit1');
+
+
+let tareas = [];
+tareas = Array.from(JSON.parse(localStorage.getItem("tareas")));
+tareas.map((e)=>{
+div.innerHTML += `<div><div class = "color">${e.title}</div><div class = "color1">${e.content}</div><input onclick = "remove(this)" type = "submit" value = "Удалить"><input onclick="getCurrentTask(this)" type = "submit" value = "Редактировать"></div>`;
+})
+function add(){
+ 
+let inp1 = document.querySelector('.text');
+let inp2 = document.querySelector('.text1');
+if (inp1.value === "" || inp2.value ==="") {
+        alert("Добавьте новую задачу!");
+        inp1.value = '';
+        inp2.value = '';
+        return false;
+        
+      }
+      var color = document.querySelectorAll('.color');
+      var color1 = document.querySelectorAll('.color1');
+
+      for (let i=0; i<color.length; i++){for (let k=0; k<color1.length; k++){ 
+      if (inp1.value === color[i].innerText || inp2.value === color1[k].innerText ) {
+        alert("Такая задача уже существует!");
+        return false;
+      }}}
+div.innerHTML = '';      
+tareas.push({title: inp1.value, content: inp2.value});
+localStorage.setItem("tareas", JSON.stringify([...JSON.parse(localStorage.getItem("tareas") || "[]"), {title: inp1.value, content: inp2.value}]));
+inp1.value = '';
+inp2.value = '';
+tareas.map((e)=>{
+div.innerHTML += `<div><div class = "color" >${e.title}</div><div class = "color1">${e.content}</div><input onclick = "remove(this)" type = "submit" value = "Удалить"><input onclick="getCurrentTask(this)" type = "submit" value = "Редактировать"></div>`;
+})
+}
+function remove(event) {let inp1 = document.querySelector('.text');
+let inp2 = document.querySelector('.text1');
+ let tareas = Array.from(JSON.parse(localStorage.getItem("tareas")));
+  tareas.forEach(elem => {if (elem.content === event.parentNode.children[1].innerText) {
+    tareas.splice(tareas.indexOf(elem), 1);}
+  }); 
+  localStorage.setItem("tareas", JSON.stringify(tareas));
+  event.parentElement.remove();}
+ function getCurrentTask(event) {
+let tareas = Array.from(JSON.parse(localStorage.getItem("tareas")));
+tareas.forEach(elem => {if (elem.content === event.parentNode.children[1].innerText) {
+
+div.innerHTML += `<div><div class = "tor2">${elem.title}</div><div class = "tor2">${elem.content}</div><input class = "tor" value="${elem.title}"><input class = "tor1" value = "${elem.content}"><button onclick = "updateTarea(this)">Отправить</button></div>`;
+
+    }}
+)}
+function updateTarea(event){
+let inp11 = document.querySelector('.tor');
+let inp22 = document.querySelector('.tor1');
+let tareas = Array.from(JSON.parse(localStorage.getItem("tareas")));
+tareas.forEach(elem => {if(elem.title===event.parentNode.children[0].innerText && elem.content===event.parentNode.children[1].innerText){
+elem.title = inp11.value;
+elem.content = inp22.value;
+
+}
+
+})
+localStorage.setItem("tareas", JSON.stringify(tareas));
+div.style.display = 'block';
+window.location = document.URL;
+}
+function sorted(e){div.innerHTML='';
+let tareas = Array.from(JSON.parse(localStorage.getItem("tareas")));
+   var posts1 = tareas.sort((a,b)=>a[e.value].localeCompare(b[e.value]));
+    posts1.map(elem=>{
+      div.innerHTML += `<div><div class = "color">${elem.title}</div><div class = "color1">${elem.content}</div><input onclick = "remove(this)" type = "submit" value = "Удалить"><input onclick="getCurrentTask(this)" type = "submit" value = "Редактировать"></div>`;})}
+
+    function search(e){ div.innerHTML = '';
+    let tareas = Array.from(JSON.parse(localStorage.getItem("tareas")));
+
+   var posts3= tareas.filter(post=>post.title.toLowerCase().includes(e.value.toLowerCase()));
+     
+    posts3.map(post=>{
+      div.innerHTML += `<div><div class = "color">${post.title}</div><div class = "color1">${post.content}</div><input onclick = "remove(this)" type = "submit" value = "Удалить"><input onclick="getCurrentTask(this)" type = "submit" value = "Редактировать"></div>`;})
+   var posts2= posts1.filter(post=>post.title.toLowerCase().includes(e.value.toLowerCase()));
+    posts2.map(post=>{
+      div.innerHTML += `<div><div class = "color">${post.title}</div><div class = "color1">${post.content}</div><input onclick = "remove(this)" type = "submit" value = "Удалить"><input onclick="getCurrentTask(this)" type = "submit" value = "Редактировать"></div>`;})
+   }
+</script>
+</body>
+</html>
